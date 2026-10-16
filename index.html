@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PES CSE Desktop Command Center — 8-Week Python, C++ STL, 50 DSA & ISA-1 Tracker</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    * { -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Inter', sans-serif; }
+    .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .progress-ring-circle {
+      transition: stroke-dashoffset 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.3s ease;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+    .bar-fill { transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.3); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.5); }
+  </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300 selection:bg-indigo-500 selection:text-white">
+
+  <canvas id="confettiCanvas" class="fixed inset-0 pointer-events-none z-50 w-full h-full"></canvas>
+
+  <div class="min-h-screen w-full flex flex-col lg:flex-row">
+
+    <!-- SIDEBAR -->
+    <aside class="w-full lg:w-72 xl:w-80 lg:min-h-screen lg:sticky lg:top-0 lg:h-screen bg-white dark:bg-slate-900 border-b lg:border-b-0 lg:border-r border-slate-200/80 dark:border-slate-800/90 flex flex-col justify-between p-5 z-30 overflow-y-auto">
+      <div class="space-y-5">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 text-[11px] font-extrabold uppercase tracking-wider">
+              <span>PES EC • CSE Sem 1 • Sec F</span>
+            </div>
+            <h1 class="font-display text-xl font-extrabold tracking-tight text-slate-900 dark:text-white mt-1.5">
+              Amulya's Space Hub💖🤖🚀
+            </h1>
+            <p id="sidebarDateText" class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">
+              Friday, Oct 16, 2026
+            </p>
+          </div>
+
+          <div class="flex items-center gap-1">
+            <button onclick="toggleSound()" title="Toggle Sound"
+              class="w-8 h-8 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+              <svg id="soundOnIcon" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+              </svg>
+              <svg id="soundOffIcon" class="w-4 h-4 hidden text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+              </svg>
+            </button>
+            <button onclick="openResetModal()" title="Manage or Reset Data"
+              class="w-8 h-8 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+            </button>
+            <button onclick="toggleTheme()" title="Switch Theme"
+              class="w-8 h-8 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-amber-500 dark:text-indigo-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+              <svg class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              <svg class="w-4 h-4 block dark:hidden text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <nav class="space-y-1.5">
+          <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2 mb-1">
+            Workspace Views
+          </div>
+          <button onclick="setViewMode('daily')" id="navBtn-daily"
+            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md shadow-indigo-500/25">
+            <span class="flex items-center gap-2.5"><span>📅</span><span>Daily Command Center</span></span>
+            <span id="navBadge-daily" class="text-[10px] px-2 py-0.5 rounded-full bg-white/20">0%</span>
+          </button>
+          <button onclick="setViewMode('isa1')" id="navBtn-isa1"
+            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="flex items-center gap-2.5"><span>🛡️</span><span>ISA-1 Syllabus Tracker</span></span>
+            <span id="navBadge-isa1" class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 font-extrabold">0/48</span>
+          </button>
+          <button onclick="setViewMode('dsa50')" id="navBtn-dsa50"
+            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="flex items-center gap-2.5"><span>💻</span><span>First 50 DSA Sheet</span></span>
+            <span id="navBadge-dsa50" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-extrabold">0/50</span>
+          </button>
+          <button onclick="setViewMode('analytics')" id="navBtn-analytics"
+            class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="flex items-center gap-2.5"><span>📊</span><span>8-Week Master Overview</span></span>
+            <span id="navBadge-analytics" class="text-[10px] px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">8 Wks</span>
+          </button>
+        </nav>
+
+        <div class="space-y-2.5 pt-2 border-t border-slate-200/70 dark:border-slate-800">
+          <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-1">
+            Live Campus Radars
+          </div>
+          <div onclick="setViewMode('isa1')" class="p-3 rounded-2xl bg-gradient-to-br from-amber-500/15 via-orange-500/10 to-rose-500/15 border border-amber-500/30 cursor-pointer hover:border-amber-500/60 transition">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-extrabold uppercase text-amber-600 dark:text-amber-400">🛡️ PES Exam Radar</span>
+              <span id="sidebarIsaPct" class="text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-amber-500 text-slate-950">0% Ready</span>
+            </div>
+            <div id="isaCountdownText" class="font-display text-xs font-extrabold text-slate-900 dark:text-white mt-1">
+              ISA 1 - S&H (Nov 2): 16d left
+            </div>
+            <div class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Click to tick Unit 1 & 2 numericals →</div>
+          </div>
+          <div onclick="selectDate('2026-10-24'); setViewMode('daily');" class="p-3 rounded-2xl bg-gradient-to-br from-violet-500/15 to-indigo-500/15 border border-violet-500/30 cursor-pointer hover:border-violet-500/60 transition">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-extrabold uppercase text-violet-600 dark:text-violet-400">🎃 Hackathon Radar</span>
+              <span class="text-[10px] font-bold text-indigo-500">Sat, Oct 24</span>
+            </div>
+            <div class="font-display text-xs font-extrabold text-slate-900 dark:text-white mt-1">HACK-O-WEEN '26 (10-Hr)</div>
+            <div class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Tracks: FinTech, Agentic AI, CV →</div>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2 border-t border-slate-200/70 dark:border-slate-800">
+          <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-1">
+            Semester 1 Milestones
+          </div>
+          <div>
+            <div class="flex justify-between text-[11px] font-bold mb-1">
+              <span class="text-slate-600 dark:text-slate-300">💻 First 50 DSA Target</span>
+              <span id="sidebarDsaFraction" class="text-emerald-600 dark:text-emerald-400">0 / 50</span>
+            </div>
+            <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div id="sidebarDsaBar" class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between text-[11px] font-bold mb-1">
+              <span class="text-slate-600 dark:text-slate-300">🛡️ ISA-1 Proof Checks</span>
+              <span id="sidebarIsaFraction" class="text-amber-600 dark:text-amber-400">0 / 48</span>
+            </div>
+            <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+              <div id="sidebarIsaBar" class="h-full bg-amber-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 mt-4 border-t border-slate-200/70 dark:border-slate-800 grid grid-cols-2 gap-2">
+        <button onclick="openAddModal()" class="py-2.5 px-3 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm transition text-center">+ Day Task</button>
+        <button onclick="openIsaModal()" class="py-2.5 px-3 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-sm transition text-center">+ ISA Topic</button>
+      </div>
+    </aside>
+
+    <!-- MAIN WORKSPACE -->
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="sticky top-0 z-20 backdrop-blur-xl bg-white/90 dark:bg-slate-900/90 border-b border-slate-200/70 dark:border-slate-800/80 px-6 py-3.5 space-y-3">
+        <div class="flex items-center justify-between gap-4">
+          <div id="weekPillsContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-0.5"></div>
+          <button onclick="selectToday()" class="px-3 py-1.5 rounded-xl text-xs font-extrabold bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white transition flex-shrink-0">
+            Jump to Today (Oct 16) →
+          </button>
+        </div>
+        <div id="dayRibbonContainer" class="grid grid-cols-7 gap-2.5 select-none"></div>
+      </header>
+
+      <main class="flex-1 p-6 max-w-[1600px] w-full mx-auto">
+        <!-- VIEW 1: DAILY -->
+        <div id="dailySection" class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+          <div class="xl:col-span-8 space-y-4">
+            <div class="rounded-3xl p-5 bg-gradient-to-r from-indigo-600 via-indigo-600 to-violet-700 text-white shadow-lg shadow-indigo-500/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div class="space-y-1">
+                <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-white/15 text-xs font-bold">
+                  <span id="heroCollegeSchedule">Fri • Classes 8:00 AM – 2:15 PM</span>
+                </div>
+                <h2 id="dailySectionTitle" class="font-display text-2xl font-extrabold">Friday, Oct 16 Checklist</h2>
+                <p id="dailySectionSubtitle" class="text-xs text-indigo-100">Chemistry, Maths-1, EPD, Python, EPD</p>
+              </div>
+              <div class="flex items-center gap-4 bg-black/20 px-4 py-3 rounded-2xl self-start sm:self-center">
+                <div>
+                  <div class="text-[11px] uppercase tracking-wider text-indigo-200 font-bold">Day Completion</div>
+                  <div id="heroSubtext" class="font-display text-lg font-extrabold">0 of 3 Done</div>
+                  <div id="weekThemeLabel" class="text-[11px] text-indigo-200 truncate max-w-[200px]">Kickoff Weekend</div>
+                </div>
+                <div class="relative w-16 h-16 flex-shrink-0 flex items-center justify-center">
+                  <svg class="w-16 h-16" viewBox="0 0 80 80">
+                    <circle cx="40" cy="40" r="32" fill="transparent" stroke="rgba(255,255,255,0.2)" stroke-width="8"/>
+                    <circle id="heroRingCircle" class="progress-ring-circle" cx="40" cy="40" r="32" fill="transparent" stroke="#34d399" stroke-width="8" stroke-linecap="round" stroke-dasharray="201.06" stroke-dashoffset="201.06"/>
+                  </svg>
+                  <span id="heroPercentText" class="absolute font-display text-sm font-extrabold">0%</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between px-1">
+              <h3 class="font-display text-base font-extrabold text-slate-900 dark:text-white">Scheduled Tasks for This Day</h3>
+              <button onclick="openAddModal()" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm transition">+ Add Custom Task</button>
+            </div>
+            <div id="dailyTasksContainer" class="space-y-3"></div>
+          </div>
+
+          <div class="xl:col-span-4 space-y-5">
+            <div class="rounded-3xl p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">PES EC • Section F</span>
+                  <h4 id="timetableDayTitle" class="font-display text-base font-extrabold text-slate-900 dark:text-white">Today's Schedule</h4>
+                </div>
+                <span class="text-xl">🏫</span>
+              </div>
+              <div id="timetableSlotsContainer" class="space-y-2 text-xs"></div>
+            </div>
+
+            <div class="rounded-3xl p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Weekly Coding Target</span>
+                  <h4 id="weekDsaSideTitle" class="font-display text-base font-extrabold text-slate-900 dark:text-white">This Week's DSA</h4>
+                </div>
+                <button onclick="setViewMode('dsa50')" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">All 50 →</button>
+              </div>
+              <div id="weekDsaQuickList" class="space-y-2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 2: ISA-1 TRACKER -->
+        <section id="isa1Section" class="hidden space-y-6">
+          <div class="rounded-3xl p-6 bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-rose-500/15 border border-amber-500/30 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div class="space-y-1.5 max-w-2xl">
+              <span class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-700 dark:text-amber-300">Nov 2 – Nov 7, 2026 • PES University S&H</span>
+              <h2 class="font-display text-2xl font-extrabold text-slate-900 dark:text-white">ISA 1 - S&H Proof-of-Work Syllabus Tracker (48 Checks)</h2>
+              <p class="text-xs text-slate-600 dark:text-slate-300">Only tick after solving numericals or tracing code yourself.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 bg-white/80 dark:bg-slate-900/80 p-4 rounded-2xl border border-amber-500/20 min-w-[280px]">
+              <div class="flex-1">
+                <div id="isaProgressLabel" class="text-xs font-extrabold text-slate-700 dark:text-slate-200">0 / 48 Checks Done</div>
+                <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mt-2">
+                  <div id="isaProgressBar" class="h-full bg-gradient-to-r from-amber-500 to-emerald-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+              </div>
+              <span id="isaProgressPct" class="font-display text-2xl font-extrabold text-amber-500">0%</span>
+              <button onclick="openIsaModal()" class="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-amber-500 hover:bg-amber-400 text-slate-950 transition">+ Add Topic</button>
+            </div>
+          </div>
+          <div id="isaSubjectFilterBar" class="flex items-center gap-2 flex-wrap"></div>
+          <div id="isaCoursesContainer" class="grid grid-cols-1 lg:grid-cols-2 gap-5"></div>
+        </section>
+
+        <!-- VIEW 3: 50 DSA SHEET -->
+        <section id="dsa50Section" class="hidden space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-5 rounded-3xl border border-slate-200/80 dark:border-slate-800">
+            <div>
+              <h2 class="font-display text-xl font-extrabold text-slate-900 dark:text-white">First 50 DSA Problems (Semester 1 Master Sheet)</h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Synced with your daily schedule.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="setDsaFilter('all')" id="dsaFilter-all" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white">All 50</button>
+              <button onclick="setDsaFilter('todo')" id="dsaFilter-todo" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Remaining</button>
+              <button onclick="setDsaFilter('done')" id="dsaFilter-done" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Completed</button>
+              <span id="dsaSheetBadge" class="ml-2 text-sm font-extrabold px-3 py-1.5 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">0 / 50</span>
+            </div>
+          </div>
+          <div id="dsa50ListContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5"></div>
+        </section>
+
+        <!-- VIEW 4: ANALYTICS -->
+        <section id="analyticsSection" class="hidden space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="rounded-3xl p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+              <span class="text-xs font-bold uppercase text-slate-400">First 50 DSA Progress</span>
+              <div id="statDsaDone" class="font-display text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">0 / 50</div>
+              <div class="text-xs text-slate-500 mt-1">Target by Dec 13, 2026</div>
+            </div>
+            <div class="rounded-3xl p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+              <span class="text-xs font-bold uppercase text-slate-400">ISA-1 Syllabus Readiness</span>
+              <div id="statIsaRate" class="font-display text-3xl font-extrabold text-amber-500 mt-1">0%</div>
+              <div id="statIsaCount" class="text-xs text-slate-500 mt-1">0 / 48 active proof checks</div>
+            </div>
+            <div class="rounded-3xl p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800">
+              <span class="text-xs font-bold uppercase text-slate-400">Selected Week Completion</span>
+              <div id="statWeekRate" class="font-display text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-1">0%</div>
+              <div id="statWeekCount" class="text-xs text-slate-500 mt-1">0 / 0 tasks completed</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-5 rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between">
+              <div>
+                <h4 class="font-display text-base font-extrabold text-slate-900 dark:text-white">Selected Week Daily Completion</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Click any bar to jump to that day</p>
+              </div>
+              <div id="weeklyBarChart" class="grid grid-cols-7 gap-3 items-end h-56 pt-8 pb-2 px-2 select-none"></div>
+            </div>
+            <div class="lg:col-span-7 rounded-3xl p-6 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 space-y-3">
+              <h4 class="font-display text-base font-extrabold text-slate-900 dark:text-white">8-Week Semester 1 Roadmap Overview</h4>
+              <div id="eightWeekOverviewList" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div id="customTaskModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
+    <div class="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display text-lg font-extrabold text-slate-900 dark:text-white">Add Custom Task</h3>
+        <button onclick="closeAddModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">✕</button>
+      </div>
+      <form onsubmit="handleAddCustomTask(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Task Title</label>
+          <input id="customTaskTitle" type="text" required maxlength="80" placeholder="e.g., Prepare pitch deck" class="w-full px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-900 dark:text-white"/>
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Time Slot / Category</label>
+          <input id="customTaskTag" type="text" maxlength="40" placeholder="e.g., 04:00 PM • Hackathon" class="w-full px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-900 dark:text-white"/>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeAddModal()" class="w-1/3 py-2.5 rounded-2xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">Cancel</button>
+          <button type="submit" class="w-2/3 py-2.5 rounded-2xl text-xs font-bold bg-indigo-600 text-white">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="isaCustomModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
+    <div class="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display text-lg font-extrabold text-slate-900 dark:text-white">Add Custom ISA-1 Topic</h3>
+        <button onclick="closeIsaModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">✕</button>
+      </div>
+      <form onsubmit="handleAddIsaTopic(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Select Course</label>
+          <select id="isaCourseSelect" class="w-full px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-bold text-slate-900 dark:text-white">
+            <option value="MA141A">UE26MA141A • Maths - I</option>
+            <option value="CS151A">UE26CS151A • Python</option>
+            <option value="EC141A">UE26EC141A • EPD</option>
+            <option value="ME142A">UE26ME142A • Mechanics 1</option>
+            <option value="CY151A">UE26CY151A • Chemistry</option>
+            <option value="CE121A">UC26CE121A • Law & Ethics</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Topic</label>
+          <input id="isaTopicTitle" type="text" required maxlength="95" placeholder="e.g., Solve 10 problems" class="w-full px-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium text-slate-900 dark:text-white"/>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeIsaModal()" class="w-1/3 py-2.5 rounded-2xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600">Cancel</button>
+          <button type="submit" class="w-2/3 py-2.5 rounded-2xl text-xs font-bold bg-amber-500 text-slate-950">Add Topic</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="resetModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
+    <div class="w-full max-w-md rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display text-lg font-extrabold text-slate-900 dark:text-white">Manage Checklist Data</h3>
+        <button onclick="closeResetModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500">✕</button>
+      </div>
+      <p class="text-xs text-slate-500 dark:text-slate-400">All tick-marks are saved automatically in your browser.</p>
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="exportBackupData()" class="py-2.5 px-3 rounded-2xl text-xs font-bold bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border border-indigo-500/30 flex items-center justify-center"><span>⬇️ Export Backup</span></button>
+        <label class="py-2.5 px-3 rounded-2xl text-xs font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 flex items-center justify-center cursor-pointer">
+          <span>⬆️ Import Backup</span><input type="file" accept=".json" onchange="importBackupData(event)" class="hidden"/>
+        </label>
+      </div>
+      <button onclick="resetSelectedDay()" class="w-full py-3 px-4 rounded-2xl text-xs font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20 flex justify-between"><span>Clear Selected Day's Ticks</span><span>↺</span></button>
+      <button onclick="resetAllProgress()" class="w-full py-3 px-4 rounded-2xl text-xs font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20 flex justify-between"><span>Reset All Progress</span><span>🗑️</span></button>
+      <button onclick="closeResetModal()" class="w-full py-2.5 rounded-2xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700">Close</button>
+    </div>
+  </div>
+
+  <div id="toastBanner" class="fixed bottom-8 right-8 z-50 pointer-events-none opacity-0 translate-y-2 transition-all duration-300">
+    <div class="px-5 py-3 rounded-2xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-extrabold shadow-2xl">
+      <span id="toastMessage">Saved!</span>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    const STORAGE_KEY = 'pes_amulya_8week_isa1_tracker_v4';
+
+    const ISA1_COURSES = [
+      {
+        code: "MA141A", fullCode: "UE26MA141A", name: "Engineering Mathematics - I",
+        faculty: "Prof. Sivasankari V / Prof. Lavanya S, Bhagya Lakshmi", icon: "📐",
+        topics: [
+          { id: "isa_ma_1", unit: "Unit 1", text: "Intro to Partial Differentiation & Geometrical Interpretation (Solve 6 problems)" },
+          { id: "isa_ma_2", unit: "Unit 1", text: "Total Derivative, Chain Rule & Composite Functions (Solve 8 numericals)" },
+          { id: "isa_ma_3", unit: "Unit 1", text: "Implicit Functions & Differentiation Problems (Solve 6 numericals)" },
+          { id: "isa_ma_4", unit: "Unit 1", text: "Homogeneous Functions & Euler's Theorem + Deductions (Solve 10 problems)" },
+          { id: "isa_ma_5", unit: "Unit 1", text: "Taylor's & Maclaurin's Series Expansion for 2 Variables (Solve 8 problems)" },
+          { id: "isa_ma_6", unit: "Unit 1", text: "Maxima & Minima of Functions of Two Variables (Solve 8 problems)" },
+          { id: "isa_ma_7", unit: "Unit 1", text: "Lagrange's Method of Undetermined Multipliers + Banana/Orange Leaf EL" },
+          { id: "isa_ma_8", unit: "Unit 2", text: "Higher-Order Linear DE: Rules for finding Complementary Function (CF)" },
+          { id: "isa_ma_9", unit: "Unit 2", text: "Particular Integral (PI) of Standard Forms: e^(ax), sin(ax+b)/cos(ax+b), x^m, e^(ax)V" },
+          { id: "isa_ma_10", unit: "Unit 2", text: "PI when X is any function (Method of Variation of Parameters / General Method)" },
+          { id: "isa_ma_11", unit: "Unit 2", text: "Legendre's Homogeneous Linear Differential Equations & Applications" }
+        ]
+      },
+      {
+        code: "CS151A", fullCode: "UE26CS151A", name: "Python for Computational Problem Solving",
+        faculty: "Prof. Afnaan K (Lecture + Wed 2-Hr Integrated Lab)", icon: "🐍",
+        topics: [
+          { id: "isa_cs_1", unit: "Unit 1", text: "Computational Problem Solving, Digital Computer HW/SW, Syntax/Semantics & IDLE" },
+          { id: "isa_cs_2", unit: "Unit 1", text: "print() & input() functions, Variables, type() & id() memory references" },
+          { id: "isa_cs_3", unit: "Unit 1", text: "Operators & Expressions, Precedence & Associativity output tracing" },
+          { id: "isa_cs_4", unit: "Unit 1", text: "Control Structures: Selection (if-elif-else) & Looping (while, for) problem solving" },
+          { id: "isa_cs_5", unit: "Unit 1", text: "Strings & String Operations + Problem Solving using Strings" },
+          { id: "isa_cs_6", unit: "Unit 1", text: "Lists & List Operations + Unit 1 Topic-Wise MCQs & Sample 4/8-Mark Q&A" },
+          { id: "isa_cs_7", unit: "Unit 2", text: "Tuples & Tuple Operations + Problem Solving using Lists & Tuples" },
+          { id: "isa_cs_8", unit: "Unit 2", text: "Dictionaries & Operations + Sets & Set Operations problem solving" },
+          { id: "isa_cs_9", unit: "Unit 2", text: "File Operations: Working with Text (.txt), JSON (.json), and CSV (.csv) files" },
+          { id: "isa_cs_10", unit: "Unit 2", text: "Functions: Definition/Call, Positional, Keyword & Variable Arguments (*args, **kwargs)" },
+          { id: "isa_cs_11", unit: "Unit 2", text: "Unit 2 Topic-Wise MCQs, Easy/Moderate/Difficult MCQs & Sample Q&A" }
+        ]
+      },
+      {
+        code: "EC141A", fullCode: "UE26EC141A", name: "Electronic Principles and Devices (EPD)",
+        faculty: "Dr. Shashidhar Tantry", icon: "⚡",
+        topics: [
+          { id: "isa_ec_1", unit: "Unit 1", text: "Intro to Semiconductors, Diode under no bias/bias, Shockley's Equation & Breakdown" },
+          { id: "isa_ec_2", unit: "Unit 1", text: "Ideal vs Practical Diode & Equivalent Circuits (Series, Parallel configurations)" },
+          { id: "isa_ec_3", unit: "Unit 1", text: "Logical Operations (AND/OR gates) using Diodes (Solve 6 circuit problems)" },
+          { id: "isa_ec_4", unit: "Unit 1", text: "Diode Clippers (Series & Parallel) & Clampers using Ideal Diode + T1 Exercise" },
+          { id: "isa_ec_5", unit: "Unit 2", text: "Block Diagram of Regulated Power Supply, Half-Wave, Centre-Tap FWR & Bridge Rectifiers" },
+          { id: "isa_ec_6", unit: "Unit 2", text: "Numericals on Rectifiers (Time Domain, Vdc, Vrms, Efficiency, Ripple, PIV)" },
+          { id: "isa_ec_7", unit: "Unit 2", text: "Shunt Capacitor Filter: Working & Numericals on Ripple/Discharge" },
+          { id: "isa_ec_8", unit: "Unit 2", text: "Zener Diode Characteristics & Voltage Regulator (Working Principle, Case 1 & 2)" }
+        ]
+      },
+      {
+        code: "ME142A", fullCode: "UE26ME142A", name: "Engineering Mechanics 1",
+        faculty: "Prof. J S Vishwas", icon: "⚙️",
+        topics: [
+          { id: "isa_me_1", unit: "Unit 1", text: "Classes 1–4: Intro to Statics, Scalars & Vectors, Force Components Numericals" },
+          { id: "isa_me_2", unit: "Unit 1", text: "Classes 5–6: Moment of a Force, Varignon's Theorem & Moment Numericals" },
+          { id: "isa_me_3", unit: "Unit 1", text: "Classes 8–10: Couple & Numericals on Couple (Coplanar force-couple systems)" },
+          { id: "isa_me_4", unit: "Unit 1", text: "Classes 11–13: Resultant of Force Systems & Resultant Numericals" },
+          { id: "isa_me_5", unit: "Unit 2", text: "Classes 14–16: Intro to Equilibrium, System Isolation (FBDs) & Conditions" },
+          { id: "isa_me_6", unit: "Unit 2", text: "Classes 17–19: Equilibrium Numericals (Connected bodies, cables, rollers, beams)" },
+          { id: "isa_me_7", unit: "Unit 2", text: "Classes 21–27: Structures — Trusses (Method of Joints & Sections)" },
+          { id: "isa_me_8", unit: "Unit 2", text: "Classes 29–32: Mechanics Revision-01, Assignment-01 & ISA-01 Practice Set" }
+        ]
+      },
+      {
+        code: "CY151A", fullCode: "UE26CY151A", name: "Engineering Chemistry",
+        faculty: "Prof. Preeti Nair", icon: "🧪",
+        topics: [
+          { id: "isa_cy_1", unit: "Unit 1", text: "Molecular Spectroscopy: EM Spectrum, Born-Oppenheimer & Microwave" },
+          { id: "isa_cy_2", unit: "Unit 1", text: "IR Spectroscopy (Diatomic & Anharmonic) & Electronic Spectroscopy" },
+          { id: "isa_cy_3", unit: "Unit 1", text: "Phase Equilibria: Phase, Component, Degrees of Freedom, Gibb's Phase Rule & Reduced Phase Rule" },
+          { id: "isa_cy_4", unit: "Unit 1", text: "Computational Chemistry Scope + Unit 1 Experiential Learning & HOTs" },
+          { id: "isa_cy_5", unit: "Unit 2", text: "Electrochemistry: Origin of Potential, Nernst Equation & Calomel Electrode" },
+          { id: "isa_cy_6", unit: "Unit 2", text: "Concentration Cells & Numerical Problems on EMF / Concentration Cells" },
+          { id: "isa_cy_7", unit: "Unit 2", text: "Corrosion: Electrochemical Theory, Differential Aeration & Factors Affecting Rate" },
+          { id: "isa_cy_8", unit: "Unit 2", text: "Corrosion Control: Metal Coatings, Inhibitors & Cathodic Protection" }
+        ]
+      },
+      {
+        code: "CE121A", fullCode: "UC26CE121A", name: "Constitutional, Cyber, IP Law & Ethics",
+        faculty: "Saturday 8:00 AM – 10:00 AM", icon: "⚖️",
+        topics: [
+          { id: "isa_ce_1", unit: "Unit 1", text: "Constitutional Law: Preamble, Fundamental Rights, Directive Principles MCQs" },
+          { id: "isa_ce_2", unit: "Unit 1/2", text: "Cyber Law & IT Act: Cyber crimes, digital signatures, data privacy & liability" },
+          { id: "isa_ce_3", unit: "Unit 2", text: "IPR & Engineering Ethics: Patents, Copyrights, Trademarks & Professional Ethics" }
+        ]
+      }
+    ];
+
+    const DSA_50 = [
+      { num: 1, title: "Two Sum", topic: "Hashing / Dict", diff: "Easy", week: 1, url: "https://leetcode.com/problems/two-sum/" },
+      { num: 2, title: "Palindrome Number", topic: "Basic Maths", diff: "Easy", week: 1, url: "https://leetcode.com/problems/palindrome-number/" },
+      { num: 3, title: "Reverse Integer", topic: "Basic Maths", diff: "Medium", week: 1, url: "https://leetcode.com/problems/reverse-integer/" },
+      { num: 4, title: "Roman to Integer", topic: "Dictionary / Map", diff: "Easy", week: 1, url: "https://leetcode.com/problems/roman-to-integer/" },
+      { num: 5, title: "Find Greatest Common Divisor of Array", topic: "Euclidean GCD", diff: "Easy", week: 1, url: "https://leetcode.com/problems/find-greatest-common-divisor-of-array/" },
+      { num: 6, title: "Valid Anagram", topic: "Frequency Map", diff: "Easy", week: 1, url: "https://leetcode.com/problems/valid-anagram/" },
+      { num: 7, title: "Contains Duplicate", topic: "Hash Set", diff: "Easy", week: 1, url: "https://leetcode.com/problems/contains-duplicate/" },
+      { num: 8, title: "Second Largest Element in Array", topic: "Arrays", diff: "Easy", week: 2, url: "https://www.geeksforgeeks.org/problems/second-largest3735/1" },
+      { num: 9, title: "Check if Array Is Sorted and Rotated", topic: "Arrays", diff: "Easy", week: 2, url: "https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/" },
+      { num: 10, title: "Remove Duplicates from Sorted Array", topic: "Two Pointers", diff: "Easy", week: 2, url: "https://leetcode.com/problems/remove-duplicates-from-sorted-array/" },
+      { num: 11, title: "Concatenation of Array", topic: "Arrays", diff: "Easy", week: 2, url: "https://leetcode.com/problems/concatenation-of-array/" },
+      { num: 12, title: "Running Sum of 1d Array", topic: "Prefix Sum", diff: "Easy", week: 2, url: "https://leetcode.com/problems/running-sum-of-1d-array/" },
+      { num: 13, title: "Move Zeroes", topic: "Two Pointers", diff: "Easy", week: 3, url: "https://leetcode.com/problems/move-zeroes/" },
+      { num: 14, title: "Rotate Array by K Steps", topic: "Arrays", diff: "Medium", week: 3, url: "https://leetcode.com/problems/rotate-array/" },
+      { num: 15, title: "Missing Number", topic: "Bit / Math", diff: "Easy", week: 3, url: "https://leetcode.com/problems/missing-number/" },
+      { num: 16, title: "Max Consecutive Ones", topic: "Arrays", diff: "Easy", week: 4, url: "https://leetcode.com/problems/max-consecutive-ones/" },
+      { num: 17, title: "Single Number", topic: "Bit Manipulation", diff: "Easy", week: 4, url: "https://leetcode.com/problems/single-number/" },
+      { num: 18, title: "Intersection of Two Arrays", topic: "Set / Pointers", diff: "Easy", week: 4, url: "https://leetcode.com/problems/intersection-of-two-arrays/" },
+      { num: 19, title: "Best Time to Buy and Sell Stock", topic: "Greedy / Array", diff: "Easy", week: 4, url: "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" },
+      { num: 20, title: "Majority Element", topic: "Arrays", diff: "Easy", week: 4, url: "https://leetcode.com/problems/majority-element/" },
+      { num: 21, title: "Richest Customer Wealth", topic: "2D Array", diff: "Easy", week: 4, url: "https://leetcode.com/problems/richest-customer-wealth/" },
+      { num: 22, title: "Kids With Candies", topic: "Arrays", diff: "Easy", week: 4, url: "https://leetcode.com/problems/kids-with-the-greatest-number-of-candies/" },
+      { num: 23, title: "Sort Colors", topic: "3 Pointers", diff: "Medium", week: 5, url: "https://leetcode.com/problems/sort-colors/" },
+      { num: 24, title: "Maximum Subarray (Kadane's)", topic: "Subarrays", diff: "Medium", week: 5, url: "https://leetcode.com/problems/maximum-subarray/" },
+      { num: 25, title: "Rearrange Array by Sign", topic: "Arrays", diff: "Medium", week: 5, url: "https://leetcode.com/problems/rearrange-array-elements-by-sign/" },
+      { num: 26, title: "Subarray Sum Equals K", topic: "Prefix Sum + Map", diff: "Medium", week: 5, url: "https://leetcode.com/problems/subarray-sum-equals-k/" },
+      { num: 27, title: "Longest Consecutive Sequence", topic: "Hash Set", diff: "Medium", week: 5, url: "https://leetcode.com/problems/longest-consecutive-sequence/" },
+      { num: 28, title: "Group Anagrams", topic: "Hashing", diff: "Medium", week: 5, url: "https://leetcode.com/problems/group-anagrams/" },
+      { num: 29, title: "Top K Frequent Elements", topic: "Bucket / Map", diff: "Medium", week: 5, url: "https://leetcode.com/problems/top-k-frequent-elements/" },
+      { num: 30, title: "Isomorphic Strings", topic: "2-Way Map", diff: "Easy", week: 5, url: "https://leetcode.com/problems/isomorphic-strings/" },
+      { num: 31, title: "Valid Palindrome", topic: "Two Pointers", diff: "Easy", week: 6, url: "https://leetcode.com/problems/valid-palindrome/" },
+      { num: 32, title: "Reverse Words in a String", topic: "Strings", diff: "Medium", week: 6, url: "https://leetcode.com/problems/reverse-words-in-a-string/" },
+      { num: 33, title: "Longest Common Prefix", topic: "Strings", diff: "Easy", week: 6, url: "https://leetcode.com/problems/longest-common-prefix/" },
+      { num: 34, title: "Largest Odd Number in String", topic: "Strings", diff: "Easy", week: 6, url: "https://leetcode.com/problems/largest-odd-number-in-string/" },
+      { num: 35, title: "Rotate String", topic: "String Match", diff: "Easy", week: 6, url: "https://leetcode.com/problems/rotate-string/" },
+      { num: 36, title: "Two Sum II - Sorted Array", topic: "Two Pointers", diff: "Medium", week: 6, url: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/" },
+      { num: 37, title: "3Sum", topic: "Two Pointers", diff: "Medium", week: 6, url: "https://leetcode.com/problems/3sum/" },
+      { num: 38, title: "Container With Most Water", topic: "Two Pointers", diff: "Medium", week: 6, url: "https://leetcode.com/problems/container-with-most-water/" },
+      { num: 39, title: "Binary Search", topic: "Binary Search", diff: "Easy", week: 7, url: "https://leetcode.com/problems/binary-search/" },
+      { num: 40, title: "Search Insert Position", topic: "Binary Search", diff: "Easy", week: 7, url: "https://leetcode.com/problems/search-insert-position/" },
+      { num: 41, title: "Find First and Last Position", topic: "Binary Search", diff: "Medium", week: 7, url: "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/" },
+      { num: 42, title: "Search in Rotated Sorted Array", topic: "Binary Search", diff: "Medium", week: 7, url: "https://leetcode.com/problems/search-in-rotated-sorted-array/" },
+      { num: 43, title: "Find Minimum in Rotated Sorted Array", topic: "Binary Search", diff: "Medium", week: 7, url: "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" },
+      { num: 44, title: "Find Peak Element", topic: "Binary Search", diff: "Medium", week: 7, url: "https://leetcode.com/problems/find-peak-element/" },
+      { num: 45, title: "Sqrt(x)", topic: "Search Space BS", diff: "Easy", week: 7, url: "https://leetcode.com/problems/sqrtx/" },
+      { num: 46, title: "Set Matrix Zeroes", topic: "2D Matrix", diff: "Medium", week: 8, url: "https://leetcode.com/problems/set-matrix-zeroes/" },
+      { num: 47, title: "Spiral Matrix", topic: "2D Matrix", diff: "Medium", week: 8, url: "https://leetcode.com/problems/spiral-matrix/" },
+      { num: 48, title: "Rotate Image", topic: "2D Matrix", diff: "Medium", week: 8, url: "https://leetcode.com/problems/rotate-image/" },
+      { num: 49, title: "Climbing Stairs", topic: "Recursion / DP", diff: "Easy", week: 8, url: "https://leetcode.com/problems/climbing-stairs/" },
+      { num: 50, title: "Valid Parentheses", topic: "Stack", diff: "Easy", week: 8, url: "https://leetcode.com/problems/valid-parentheses/" }
+    ];
+
+    const PES_SEC_F_DAYS = [
+      {
+        dayShort: "Mon",
+        scheduleBadge: "Mon • Classes 8:00 AM – 12:30 PM (Half-Day!)",
+        classes: "Python, EPD, Maths-1, Mechanics-1 (Free after 12:30 PM)",
+        acadTask: "PES Anchor (8:30 PM): Solve 5 Maths-1 & Mechanics-1 problems",
+        slots: [
+          ["08:00 – 09:00", "UE26CS151A • Python (Prof. Afnaan K)"],
+          ["09:00 – 10:00", "UE26EC141A • EPD (Dr. Shashidhar Tantry)"],
+          ["10:00 – 10:30", "☕ Morning Break"],
+          ["10:30 – 11:30", "UE26MA141A • Engineering Maths-1"],
+          ["11:30 – 12:30", "UE26ME142A • Engineering Mechanics 1"],
+          ["12:30 onwards", "🚀 NO SCHEDULE — Half-Day Golden Coding Block!"]
+        ]
+      },
+      {
+        dayShort: "Tue",
+        scheduleBadge: "Tue • Classes 8:00 AM – 2:15 PM",
+        classes: "Mechanics-1, Maths-1, Chemistry, Maths-1, Python (1:15–2:15)",
+        acadTask: "PES Anchor (9:00 PM): Revise Chemistry & Maths-1 notes",
+        slots: [
+          ["08:00 – 09:00", "UE26ME142A • Engineering Mechanics 1"],
+          ["09:00 – 10:00", "UE26MA141A • Engineering Maths-1"],
+          ["10:00 – 10:30", "☕ Morning Break"],
+          ["10:30 – 11:30", "UE26CY151A • Engineering Chemistry"],
+          ["11:30 – 12:30", "UE26MA141A • Engineering Maths-1"],
+          ["12:30 – 01:15", "🍱 Lunch Break"],
+          ["01:15 – 02:15", "UE26CS151A • Python (Prof. Afnaan K)"],
+          ["02:15 onwards", "✅ Classes Done (Study / SOF English)"]
+        ]
+      },
+      {
+        dayShort: "Wed",
+        scheduleBadge: "Wed • Classes 8:00 AM – 12:30 PM (Half-Day!)",
+        classes: "Chemistry, Mechanics-1, 2-Hr Python Integrated Lab (10:30–12:30)",
+        acadTask: "PES Anchor (8:30 PM): Push Wed Python Lab code to GitHub",
+        slots: [
+          ["08:00 – 09:00", "UE26CY151A • Engineering Chemistry"],
+          ["09:00 – 10:00", "UE26ME142A • Engineering Mechanics 1"],
+          ["10:00 – 10:30", "☕ Morning Break"],
+          ["10:30 – 12:30", "💻 UE26CS151A • 2-Hr Python Integrated Lab"],
+          ["12:30 onwards", "🚀 NO SCHEDULE — Half-Day Golden Coding Block!"]
+        ]
+      },
+      {
+        dayShort: "Thu",
+        scheduleBadge: "Thu • Classes 8:00 AM – 2:15 PM",
+        classes: "Maths-1, Python, Chemistry, EPD, Mechanics-1 (1:15–2:15)",
+        acadTask: "PES Anchor (9:00 PM): Revise EPD derivations & numericals",
+        slots: [
+          ["08:00 – 09:00", "UE26MA141A • Engineering Maths-1"],
+          ["09:00 – 10:00", "UE26CS151A • Python (Prof. Afnaan K)"],
+          ["10:00 – 10:30", "☕ Morning Break"],
+          ["10:30 – 11:30", "UE26CY151A • Engineering Chemistry"],
+          ["11:30 – 12:30", "UE26EC141A • EPD (Dr. Shashidhar Tantry)"],
+          ["12:30 – 01:15", "🍱 Lunch Break"],
+          ["01:15 – 02:15", "UE26ME142A • Engineering Mechanics 1"],
+          ["02:15 onwards", "✅ Free after 2:15 PM"]
+        ]
+      },
+      {
+        dayShort: "Fri",
+        scheduleBadge: "Fri • Classes 8:00 AM – 2:15 PM",
+        classes: "Chemistry, Maths-1, EPD, Python, EPD (1:15–2:15)",
+        acadTask: "PES Anchor (9:00 PM): Complete weekly PESU Academy quizzes",
+        slots: [
+          ["08:00 – 09:00", "UE26CY151A • Engineering Chemistry"],
+          ["09:00 – 10:00", "UE26MA141A • Engineering Maths-1"],
+          ["10:00 – 10:30", "☕ Morning Break"],
+          ["10:30 – 11:30", "UE26EC141A • EPD (Dr. Shashidhar Tantry)"],
+          ["11:30 – 12:30", "UE26CS151A • Python (Prof. Afnaan K)"],
+          ["12:30 – 01:15", "🍱 Lunch Break"],
+          ["01:15 – 02:15", "UE26EC141A • EPD (Dr. Shashidhar Tantry)"],
+          ["02:15 onwards", "✅ Free after 2:15 PM"]
+        ]
+      },
+      {
+        dayShort: "Sat",
+        scheduleBadge: "Sat • Classes 8:00 AM – 10:00 AM Only",
+        classes: "Constitutional, Cyber, IP Law & Ethics (Free from 10:00 AM!)",
+        acadTask: "Saturday Deep Review: Summarize week's EPD & Chemistry units",
+        slots: [
+          ["08:00 – 10:00", "UC26CE121A • Constitutional, Cyber, IP Law & Ethics"],
+          ["10:00 onwards", "⚡ NO SCHEDULE — Weekend C++ STL & Hackathon Block!"]
+        ]
+      },
+      {
+        dayShort: "Sun",
+        scheduleBadge: "Sun • Full Off-Day & Weekly Reset",
+        classes: "No Classes • 9.0+ CGPA Weekly Catch-up & GitHub Audit",
+        acadTask: "Sunday 2.5-Hr SGPA 9.0+ Block: Previous-year ISA questions",
+        slots: [
+          ["09:30 – 11:30", "💻 C++ STL Rewrite & GitHub Weekly Push"],
+          ["02:30 – 05:00", "🎓 9.0+ SGPA Weekly Numericals Block"],
+          ["08:00 – 09:00", "📋 Plan Next Week's Targets"]
+        ]
+      }
+    ];
+
+    const WEEKS_CONFIG = [
+      {
+        weekNum: 0,
+        label: "Kickoff (Oct 16–18)",
+        startMonday: "2026-10-12",
+        theme: "Kickoff Weekend: Environment Setup, Git & Ch 6 Dicts Warmup",
+        pyDaily: [
+          "Setup VS Code, Git & GitHub repo `pes-sem1-python-dsa`",
+          "Python Crash Course Ch 5 review: Boolean expressions & list conditionals",
+          "PES Python Lab review: Loops & basic list manipulations",
+          "Python Crash Course Ch 6: Create & query nested dictionaries",
+          "Fri Oct 16: Finish Python Crash Course Ch 6 'Try It Yourself' (6-1 to 6-6)",
+          "Sat Oct 17 (10:30 AM): Install MinGW g++ compiler & run first C++ Hello World + loop",
+          "Sun Oct 18: Organize GitHub folders (`/python-crash-course`, `/cpp-stl`, `/dsa-50`)"
+        ],
+        cppWeekend: {
+          sat: "C++ Kickoff (10:45 AM): Install C++ compiler in VS Code, test `#include <iostream>`, `cin`, `cout`, and basic `for` loops",
+          sun: "Git & Complexity Audit: Learn Big-O Time Complexity before starting DSA #1 tomorrow"
+        },
+        dsaByDay: [[], [], [], [], [], [], []]
+      },
+      {
+        weekNum: 1,
+        label: "Wk 1 (Oct 19–25) 🎃",
+        startMonday: "2026-10-19",
+        theme: "Week 1: Python Dicts/Sets + Basic Maths (#1–#7) + HACK-O-WEEN '26 (Oct 24)",
+        pyDaily: [
+          "Mon (1:45 PM Block): Python Ch 6 — `.get()`, `.items()`, `.keys()`, `.values()` & frequency counter",
+          "Tue (Ayudha Pooja): Python `collections.Counter` & `defaultdict` + 1 hr HACK-O-WEEN prep",
+          "Wed (Vijayadashami): Python `set()` operations (`union`, `intersection`) + HACK-O-WEEN boilerplate",
+          "Thu (6:30 PM): Nesting dictionaries inside lists & lists inside dictionaries",
+          "Fri (6:30 PM): Build a 60-line Python CLI Contact/Expense Dictionary Lookup script",
+          "Sat (Oct 24 — HACK-O-WEEN '26!): Compete in PES 10-Hr Hackathon (Agentic AI / FinTech)",
+          "Sun (9:30 AM): Push Week 1 Python scripts, HACK-O-WEEN repo & DSA #1–#7 solutions to GitHub"
+        ],
+        cppWeekend: {
+          sat: "🎃 HACK-O-WEEN '26 Day: Focus 100% on the 10-hour hackathon!",
+          sun: "C++ Bridge Lab (10:30 AM): Primitive types, pass-by-reference (`&`) + Rewrite DSA #2 & #5 in C++"
+        },
+        dsaByDay: [[1], [2], [3, 4], [5], [6], [7], []],
+        specialDays: {
+          1: "🎉 Holiday: Ayudha Pooja",
+          2: "🎉 Holiday: Vijayadashami",
+          5: "🎃 HACK-O-WEEN '26 (2nd Edition): 10-Hour PES Hackathon Today!"
+        }
+      },
+      {
+        weekNum: 2,
+        label: "Wk 2 (Oct 26–Nov 1)",
+        startMonday: "2026-10-26",
+        theme: "Week 2: While Loops, Functions & Pre-ISA-1 Pivot (#8–#12)",
+        pyDaily: [
+          "Mon: Python Ch 7 — `input()`, modulo operator, `while` loops, `break` & `continue`",
+          "Tue: Using `while` loops with lists & dictionaries",
+          "Wed: Python Ch 8 Part 1 — Defining functions, positional & keyword arguments",
+          "Thu (Pre-ISA-1 Pivot): Revise `UE26CS151A` Unit 1 slides & output tracing",
+          "Fri (Pre-ISA-1 Pivot): Revise Python string slicing, list methods & operator precedence",
+          "Sat (Pre-ISA-1 Pivot): Solve 20 PES previous-year MCQ/short-answer questions",
+          "Sun (ISA-1 Eve): Full formula & concept revision for Monday's first `ISA 1 - S&H` exam"
+        ],
+        cppWeekend: {
+          sat: "Light C++ (30 mins): C++ fixed arrays vs `std::string` basics",
+          sun: "🛡️ ISA-1 Shield Active: 100% focus on PES ISA-1 subjects!"
+        },
+        dsaByDay: [[8], [9], [10, 11], [12], [], [], []],
+        specialDays: {
+          2: "📌 PES Event: FAM 2 + Half-Day after 12:30 PM",
+          6: "🛡️ ISA-1 Starts Tomorrow (Nov 2): Sleep by 10 PM!"
+        }
+      },
+      {
+        weekNum: 3,
+        label: "Wk 3 (Nov 2–8) 🛡️ISA-1",
+        startMonday: "2026-11-02",
+        theme: "Week 3: 🛡️ ISA 1 - S&H Exam Shield Week + Post-Exam Array Problems (#13–#15)",
+        pyDaily: [
+          "Mon (ISA-1 Day 1): 15-min Python quick trace + Exam Prep",
+          "Tue (ISA-1 Day 2): 15-min Python `*args` / `**kwargs` check + Exam Prep",
+          "Wed (ISA-1 Day 3 + CCM 2): 15-min Python `lambda`, `map()`, `filter()` review",
+          "Thu (ISA-1 Day 4): 15-min Python list/dict comprehension one-liners",
+          "Fri (ISA-1 Day 5): 15-min Python recursion base-case tracing",
+          "Sat (ISA-1 Ends!): Solve DSA #13 (Move Zeroes)",
+          "Sun (Post-ISA Reset): Solve DSA #14 & #15 + audit ISA-1 performance"
+        ],
+        cppWeekend: {
+          sat: "Post-ISA C++ Refresher (3:00 PM): Setup `std::vector<int>`",
+          sun: "C++ Array Rotation: Code DSA #14 in C++"
+        },
+        dsaByDay: [[], [], [], [], [], [13], [14, 15]],
+        specialDays: {
+          0: "🛡️ ISA 1 - S&H (Day 1)", 1: "🛡️ ISA 1 - S&H (Day 2)", 2: "🛡️ ISA 1 - S&H (Day 3) + CCM 2",
+          3: "🛡️ ISA 1 - S&H (Day 4)", 4: "🛡️ ISA 1 - S&H (Day 5)", 5: "🛡️ ISA-1 Final Exam Day!"
+        }
+      },
+      {
+        weekNum: 4,
+        label: "Wk 4 (Nov 9–15) 🪔",
+        startMonday: "2026-11-09",
+        theme: "Week 4: Deepavali Surge — Modules, Recursion & C++ `std::vector` (#16–#22)",
+        pyDaily: [
+          "Mon (Deepavali): Python Ch 8 Part 2 — Passing lists & preventing mutation",
+          "Tue (Balipadyami): Organizing Python code into multiple `.py` modules",
+          "Wed (Monday Timetable - Ends 12:30 PM!): Intro to Recursion in Python",
+          "Thu (Tuesday Timetable - Ends 2:15 PM): Python `functools.reduce` & custom sorting",
+          "Fri: Build a modular multi-file Python CLI Grade/SGPA Calculator",
+          "Sat (PTM 1 - S&H): Refactor Python utility functions with type hints",
+          "Sun: Push Week 4 modular Python code & DSA #16–#22 to GitHub"
+        ],
+        cppWeekend: {
+          sat: "C++ STL Lab I (11:00 AM): `std::vector`, `std::pair`, `std::sort`",
+          sun: "C++ Rewrite: Majority Element (#20) & Stock Buy/Sell (#19)"
+        },
+        dsaByDay: [[16], [17], [18, 19], [20], [21], [22], []],
+        specialDays: { 0: "🪔 Deepavali", 1: "🪔 Balipadyami", 5: "👨‍👩‍👧 PTM 1 - S&H" }
+      },
+      {
+        weekNum: 5,
+        label: "Wk 5 (Nov 16–22)",
+        startMonday: "2026-11-16",
+        theme: "Week 5: Python OOP (Classes) + Kadane's & C++ Hashing (#23–#30)",
+        pyDaily: [
+          "Mon: Python Ch 9 — Creating Classes, `__init__()`, attributes & methods",
+          "Tue: Working with instances and default attribute values",
+          "Wed: Build a `BankAccount` & `LedgerTransaction` OOP class in Python",
+          "Thu: Prefix Sum + Dictionary hashing pattern in Python",
+          "Fri: Bucket sort & `Counter.most_common()` in Python",
+          "Sat: Compare Python `dict` vs C++ `std::unordered_map`",
+          "Sun: Review all 8 Medium/Easy Hashing & Subarray problems (#23–#30)"
+        ],
+        cppWeekend: {
+          sat: "C++ STL Lab II: `std::unordered_map`, `std::map`, `std::unordered_set`",
+          sun: "C++ Rewrite: Kadane's Algorithm (#24) & Subarray Sum Equals K (#26)"
+        },
+        dsaByDay: [[23, 24], [25], [26, 27], [28], [29], [30], []]
+      },
+      {
+        weekNum: 6,
+        label: "Wk 6 (Nov 23–29)",
+        startMonday: "2026-11-23",
+        theme: "Week 6: OOP Inheritance, Dunder Methods & Two Pointers (#31–#38)",
+        pyDaily: [
+          "Mon: Python Ch 9 Part 2 — Class Inheritance & `super().__init__()`",
+          "Tue: Composition and importing classes across modules",
+          "Wed: Python Magic/Dunder methods (`__str__`, `__repr__`, `__lt__`)",
+          "Thu: Python `@dataclass` decorator & `collections.deque`",
+          "Fri: Master string builder pattern (`''.join(list)`)",
+          "Sat: Solve 3Sum (#37) & Container With Most Water (#38)",
+          "Sun: Push OOP Inheritance mini-project & DSA #31–#38 to GitHub"
+        ],
+        cppWeekend: {
+          sat: "C++ Strings & Two Pointers: `stringstream`, `tolower`, reversal",
+          sun: "C++ Rewrite: 3Sum (#37) and Container With Most Water (#38)"
+        },
+        dsaByDay: [[31, 32], [33], [34, 35], [36], [37], [38], []]
+      },
+      {
+        weekNum: 7,
+        label: "Wk 7 (Nov 30–Dec 6)",
+        startMonday: "2026-11-30",
+        theme: "Week 7: Files, Exceptions, JSON & 1D Binary Search (#39–#45)",
+        pyDaily: [
+          "Mon: Python Ch 10 — Reading/writing files with `pathlib` and `with open()`",
+          "Tue: Handling exceptions cleanly with `try-except-else-finally`",
+          "Wed (FAD): Parsing & saving structured data with `json` and `csv` modules",
+          "Thu: Binary Search template in Python + `bisect_left` module",
+          "Fri: Build a persistent JSON-backed CLI Task/Expense Logger",
+          "Sat: Binary Search on Rotated Arrays & Peak Elements (#43, #44)",
+          "Sun: Binary Search on Answer Space (#45 Sqrt(x)) + GitHub commit"
+        ],
+        cppWeekend: {
+          sat: "C++ STL Binary Search: `lower_bound`, `upper_bound`",
+          sun: "C++ Rewrite: Rotated Sorted Array (#42) & First/Last Position (#41)"
+        },
+        dsaByDay: [[39, 40], [41], [42], [43], [44], [45], []],
+        specialDays: { 2: "📌 PES Calendar Event: FAD (Wed Dec 2)" }
+      },
+      {
+        weekNum: 8,
+        label: "Wk 8 (Dec 7–13) 🏁",
+        startMonday: "2026-12-07",
+        theme: "Week 8: Unit Testing, 2D Matrices, Recursion & 50-DSA Finish Line (#46–#50)",
+        pyDaily: [
+          "Mon: Python Ch 11 — Writing unit tests using `pytest` / `unittest`",
+          "Tue: Testing Python classes, fixtures & edge-case assertions",
+          "Wed (FAM 2): 2D Matrix traversal patterns (Transpose, Spiral)",
+          "Thu: Recursion tree visualization + `@functools.lru_cache` memoization",
+          "Fri: Stack LIFO implementation + Valid Parentheses (#50 — 50th Problem!)",
+          "Sat: Polish & publish your Sem 1 Python Capstone Project on GitHub",
+          "Sun: 🏆 50-DSA Milestone Audit & Plan ISA-2 / ESA Schedule"
+        ],
+        cppWeekend: {
+          sat: "C++ STL Adapters Lab: `std::stack`, `std::queue`, `priority_queue`",
+          sun: "C++ Milestone: Valid Parentheses (#50) & Spiral Matrix (#47)"
+        },
+        dsaByDay: [[46], [47], [48], [49], [50], [], []],
+        specialDays: { 2: "📌 PES Calendar Event: FAM 2 (Wed Dec 9)", 4: "🏆 FINISH LINE: Problem #50 Today!" }
+      }
+    ];
+
+    const ISA1_DAILY_ROADMAP = {
+      "2026-10-16": "🎯 ISA-1 Day 1/16: Maths-1 (Partial Diff & Total Derivative) + Chemistry (EM Spectrum & Born-Oppenheimer)",
+      "2026-10-17": "🎯 ISA-1 Day 2/16: EPD (Diode Bias & Shockley Eq) + Mechanics (Classes 1–4) + Law Unit 1",
+      "2026-10-18": "🎯 ISA-1 Day 3/16: Maths-1 (Implicit & Euler's Theorem) + EPD (Ideal/Practical Diode Equivalent Circuits)",
+      "2026-10-19": "🎯 ISA-1 Day 4/16: Mechanics (Classes 5–10: Moment Numericals) + Python (Unit 1 Precedence)",
+      "2026-10-20": "🎉 Ayudha Pooja Sprint: Maths-1 (Taylor's Series & Maxima/Minima) + Chemistry (Microwave & IR)",
+      "2026-10-21": "🎉 Vijayadashami Sprint: EPD (Diode Logic Gates, Clippers & Clampers) + Mechanics (Classes 11–13)",
+      "2026-10-22": "🎯 ISA-1 Day 7/16: Chemistry (Gibb's Phase Rule) + Maths-1 (Lagrange's Multipliers)",
+      "2026-10-23": "🎯 ISA-1 Day 8/16: EPD Unit 2 (Rectifier Numericals) + Python (Strings & Lists MCQs)",
+      "2026-10-24": "🎃 HACK-O-WEEN '26 Day: After Hackathon, light 20m review of Law Unit 2",
+      "2026-10-25": "🎯 ISA-1 Day 10/16: Maths-1 Unit 2 (CF & PI) + Mechanics Unit 2 (Classes 14–19)",
+      "2026-10-26": "🎯 ISA-1 Day 11/16: Chemistry Unit 2 (Nernst Eq & Concentration Cells)",
+      "2026-10-27": "🎯 ISA-1 Day 12/16: EPD Unit 2 (Capacitor Filter & Zener Regulator Numericals)",
+      "2026-10-28": "🎯 ISA-1 Day 13/16: Mechanics Unit 2 (Classes 21–27: Trusses)",
+      "2026-10-29": "🛡️ Pre-ISA-1 Day 14/16: Maths-1 Unit 2 (Variation of Parameters) + Chemistry (Corrosion)",
+      "2026-10-30": "🛡️ Pre-ISA-1 Day 15/16: Python Unit 2 (Tuples, Dicts, Sets, Files & *args/**kwargs)",
+      "2026-10-31": "🛡️ Pre-ISA-1 Day 16/16: Full Mock Numericals — Mechanics Classes 29–32 + EPD T1 Exercises",
+      "2026-11-01": "🛡️ ISA-1 Eve: Formula Sheet Final Pass — Sleep by 10 PM!"
+    };
+
+    function toDateKey(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function parseDateKey(key) {
+      const [y, m, d] = key.split('-').map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function addDays(d, offset) {
+      const copy = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      copy.setDate(copy.getDate() + offset);
+      return copy;
+    }
+
+    function getTasksForDate(dateKey) {
+      if (dateKey < "2026-10-16") {
+        return { weekConfig: WEEKS_CONFIG[0], dayIdx: 0, secF: PES_SEC_F_DAYS[0], specialNote: "Past Date (Before Tracker Start)", tasks: [] };
+      }
+      for (const wk of WEEKS_CONFIG) {
+        const monDate = parseDateKey(wk.startMonday);
+        for (let dayIdx = 0; dayIdx < 7; dayIdx++) {
+          const curDate = addDays(monDate, dayIdx);
+          if (toDateKey(curDate) === dateKey) {
+            const tasks = [];
+            const secF = PES_SEC_F_DAYS[dayIdx];
+            const specialNote = wk.specialDays && wk.specialDays[dayIdx] ? wk.specialDays[dayIdx] : null;
+
+            if (wk.pyDaily && wk.pyDaily[dayIdx]) {
+              tasks.push({
+                id: `py_w${wk.weekNum}_d${dayIdx}`,
+                title: wk.pyDaily[dayIdx],
+                tag: dayIdx === 0 || dayIdx === 2 ? "🐍 Python • 1:45 PM Half-Day Block" : "🐍 Python • Daily Concept & Code",
+                icon: "🐍",
+                color: "indigo"
+              });
+            }
+
+            const dsaNums = (wk.dsaByDay && wk.dsaByDay[dayIdx]) ? wk.dsaByDay[dayIdx] : [];
+            dsaNums.forEach(num => {
+              const prob = DSA_50.find(p => p.num === num);
+              if (prob) {
+                tasks.push({
+                  id: `dsa_${prob.num}`,
+                  title: `DSA #${prob.num}: ${prob.title}`,
+                  tag: `💻 ${prob.topic} • ${prob.diff}`,
+                  icon: "💻",
+                  color: "emerald",
+                  url: prob.url,
+                  dsaNum: prob.num
+                });
+              }
+            });
+
+            if (dayIdx === 5 && wk.cppWeekend && wk.cppWeekend.sat) {
+              tasks.push({
+                id: `cpp_w${wk.weekNum}_sat`,
+                title: wk.cppWeekend.sat,
+                tag: "⚡ C++ / Hackathon • Saturday Block",
+                icon: "⚡",
+                color: "amber"
+              });
+            }
+            if (dayIdx === 6 && wk.cppWeekend && wk.cppWeekend.sun) {
+              tasks.push({
+                id: `cpp_w${wk.weekNum}_sun`,
+                title: wk.cppWeekend.sun,
+                tag: "⚡ C++ & GitHub • Sunday Morning Block",
+                icon: "⚡",
+                color: "amber"
+              });
+            }
+
+            const exactIsaPlan = ISA1_DAILY_ROADMAP[dateKey];
+            tasks.push({
+              id: `pes_w${wk.weekNum}_d${dayIdx}`,
+              title: exactIsaPlan
+                ? `${exactIsaPlan} | ${secF.acadTask}`
+                : (specialNote ? `${specialNote} — ${secF.acadTask}` : secF.acadTask),
+              tag: exactIsaPlan ? `🛡️ ISA-1 Daily Target • ${secF.dayShort}` : `🎓 ${secF.scheduleBadge}`,
+              icon: exactIsaPlan ? "🛡️" : "🎓",
+              color: exactIsaPlan ? "amber" : "sky"
+            });
+
+            const customList = (appState.customTasks && appState.customTasks[dateKey]) ? appState.customTasks[dateKey] : [];
+            customList.forEach(ct => tasks.push(ct));
+
+            return { weekConfig: wk, dayIdx, secF, specialNote, tasks };
+          }
+        }
+      }
+
+      const dObj = parseDateKey(dateKey);
+      const jsDay = dObj.getDay();
+      const dayIdx = jsDay === 0 ? 6 : jsDay - 1;
+      const secF = PES_SEC_F_DAYS[dayIdx];
+      return {
+        weekConfig: WEEKS_CONFIG[1],
+        dayIdx,
+        secF,
+        specialNote: null,
+        tasks: [
+          { id: `fallback_py_${dateKey}`, title: "Python & C++ Practice Session (45m)", tag: "🐍 Daily Coding", icon: "🐍", color: "indigo" },
+          { id: `fallback_pes_${dateKey}`, title: secF.acadTask, tag: `🎓 ${secF.scheduleBadge}`, icon: "🎓", color: "sky" }
+        ]
+      };
+    }
+
+    const DEFAULT_TODAY = "2026-10-16";
+    let appState = {
+      theme: 'dark',
+      soundEnabled: true,
+      selectedWeekIdx: 0,
+      selectedDateKey: DEFAULT_TODAY,
+      viewMode: 'daily',
+      dsaFilter: 'all',
+      isaSubjectFilter: 'ALL',
+      completed: {},
+      customTasks: {},
+      customIsaTopics: {}
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('pes_amulya_8week_tracker_v2');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          appState.theme = parsed.theme || 'dark';
+          appState.soundEnabled = parsed.soundEnabled !== undefined ? parsed.soundEnabled : true;
+          appState.completed = parsed.completed || {};
+          appState.customTasks = parsed.customTasks || {};
+          appState.customIsaTopics = parsed.customIsaTopics || {};
+          if (parsed.selectedDateKey) appState.selectedDateKey = parsed.selectedDateKey;
+          if (parsed.selectedWeekIdx !== undefined) appState.selectedWeekIdx = parsed.selectedWeekIdx;
+        }
+      } catch (e) {}
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          theme: appState.theme,
+          soundEnabled: appState.soundEnabled,
+          selectedWeekIdx: appState.selectedWeekIdx,
+          selectedDateKey: appState.selectedDateKey,
+          completed: appState.completed,
+          customTasks: appState.customTasks,
+          customIsaTopics: appState.customIsaTopics
+        }));
+      } catch (e) {}
+    }
+
+    let audioCtx = null;
+    function playSound(type = 'check') {
+      if (!appState.soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) audioCtx = new AudioContextClass();
+        }
+        if (!audioCtx) return;
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        if (type === 'check') {
+          osc.frequency.setValueAtTime(540, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.11);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+          osc.start(now); osc.stop(now + 0.15);
+        } else if (type === 'uncheck') {
+          osc.frequency.setValueAtTime(400, now);
+          osc.frequency.exponentialRampToValueAtTime(260, now + 0.09);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+          osc.start(now); osc.stop(now + 0.11);
+        } else if (type === 'celebrate') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+            const o = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            o.connect(g); g.connect(audioCtx.destination);
+            o.frequency.setValueAtTime(freq, now + idx * 0.07);
+            g.gain.setValueAtTime(0.12, now + idx * 0.07);
+            g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.25);
+            o.start(now + idx * 0.07); o.stop(now + idx * 0.07 + 0.26);
+          });
+        }
+      } catch (e) {}
+    }
+
+    function isTaskDone(taskId) { return Boolean(appState.completed[taskId]); }
+
+    function getDayStats(dateKey) {
+      const info = getTasksForDate(dateKey);
+      const total = info.tasks.length;
+      if (total === 0) return { done: 0, total: 0, percent: 0 };
+      let done = 0;
+      info.tasks.forEach(t => { if (isTaskDone(t.id)) done++; });
+      return { done, total, percent: Math.round((done / total) * 100) };
+    }
+
+    function getWeekStats(weekIdx) {
+      const wk = WEEKS_CONFIG[weekIdx];
+      const mon = parseDateKey(wk.startMonday);
+      let done = 0, total = 0;
+      for (let i = 0; i < 7; i++) {
+        const st = getDayStats(toDateKey(addDays(mon, i)));
+        done += st.done; total += st.total;
+      }
+      return { done, total, percent: total > 0 ? Math.round((done / total) * 100) : 0 };
+    }
+
+    function getGlobalDsaCount() {
+      let count = 0;
+      DSA_50.forEach(p => { if (isTaskDone(`dsa_${p.num}`)) count++; });
+      return count;
+    }
+
+    function getCourseTopics(courseObj) {
+      const custom = (appState.customIsaTopics && appState.customIsaTopics[courseObj.code]) ? appState.customIsaTopics[courseObj.code] : [];
+      return [...courseObj.topics, ...custom];
+    }
+
+    function getIsaGlobalStats() {
+      let done = 0, total = 0;
+      ISA1_COURSES.forEach(c => {
+        const topics = getCourseTopics(c);
+        total += topics.length;
+        topics.forEach(t => { if (isTaskDone(t.id)) done++; });
+      });
+      return { done, total, percent: total > 0 ? Math.round((done / total) * 100) : 0 };
+    }
+
+    function updateIsaCountdownBanner() {
+      const now = new Date();
+      const isa1Start = new Date('2026-11-02T08:00:00+05:30');
+      const isa1End = new Date('2026-11-07T17:00:00+05:30');
+      const isa2Start = new Date('2027-01-04T08:00:00+05:30');
+      const textEl = document.getElementById('isaCountdownText');
+      if (now < isa1Start) {
+        const diffMs = isa1Start - now;
+        const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+        textEl.textContent = `ISA 1 - S&H (Nov 2): ${days}d ${hours}h left`;
+      } else if (now <= isa1End) {
+        textEl.textContent = `🛡️ ISA 1 - S&H IS LIVE THIS WEEK!`;
+      } else {
+        const diffMs = Math.max(0, isa2Start - now);
+        const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        textEl.textContent = `ISA 2 - S&H (Jan 4): ${days} days left`;
+      }
+    }
+
+    function renderAll() {
+      document.documentElement.classList.toggle('dark', appState.theme === 'dark');
+      document.getElementById('soundOnIcon').classList.toggle('hidden', !appState.soundEnabled);
+      document.getElementById('soundOffIcon').classList.toggle('hidden', appState.soundEnabled);
+
+      updateIsaCountdownBanner();
+      renderSidebarMetrics();
+      renderWeekPills();
+      renderDayRibbon();
+      renderDailyCommandCenter();
+      renderIsa1Section();
+      renderDsa50Sheet();
+      renderAnalytics();
+    }
+
+    function renderSidebarMetrics() {
+      const daySt = getDayStats(appState.selectedDateKey);
+      const dsaDone = getGlobalDsaCount();
+      const isaSt = getIsaGlobalStats();
+
+      const dObj = parseDateKey(appState.selectedDateKey);
+      document.getElementById('sidebarDateText').textContent =
+        dObj.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' });
+
+      document.getElementById('navBadge-daily').textContent = `${daySt.percent}%`;
+      document.getElementById('navBadge-isa1').textContent = `${isaSt.done}/${isaSt.total}`;
+      document.getElementById('navBadge-dsa50').textContent = `${dsaDone}/50`;
+
+      document.getElementById('sidebarIsaPct').textContent = `${isaSt.percent}% Ready`;
+      document.getElementById('sidebarDsaFraction').textContent = `${dsaDone} / 50`;
+      document.getElementById('sidebarDsaBar').style.width = `${Math.round((dsaDone / 50) * 100)}%`;
+
+      document.getElementById('sidebarIsaFraction').textContent = `${isaSt.done} / ${isaSt.total}`;
+      document.getElementById('sidebarIsaBar').style.width = `${isaSt.percent}%`;
+    }
+
+    function renderWeekPills() {
+      const container = document.getElementById('weekPillsContainer');
+      container.innerHTML = '';
+      WEEKS_CONFIG.forEach((wk, idx) => {
+        const isSel = idx === appState.selectedWeekIdx;
+        const wkSt = getWeekStats(idx);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => selectWeek(idx);
+        btn.className = `px-3.5 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition flex items-center gap-2 ${
+          isSel ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-500/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+        }`;
+        btn.innerHTML = `<span>${wk.label}</span>${wkSt.percent === 100 && wkSt.total > 0 ? '<span>✅</span>' : `<span class="text-[10px] px-1.5 py-0.5 rounded bg-black/15">${wkSt.percent}%</span>`}`;
+        container.appendChild(btn);
+      });
+    }
+
+    function renderDayRibbon() {
+      const wk = WEEKS_CONFIG[appState.selectedWeekIdx];
+      const monDate = parseDateKey(wk.startMonday);
+      const container = document.getElementById('dayRibbonContainer');
+      container.innerHTML = '';
+
+      const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      const shortNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+      for (let i = 0; i < 7; i++) {
+        const dObj = addDays(monDate, i);
+        const dKey = toDateKey(dObj);
+        const isSel = dKey === appState.selectedDateKey;
+        const isToday = dKey === DEFAULT_TODAY;
+        const st = getDayStats(dKey);
+        const isBeforeStart = dKey < "2026-10-16";
+
+        if (isBeforeStart) {
+          const emptyDiv = document.createElement('div');
+          emptyDiv.className = "p-2.5 sm:px-3.5 sm:py-2.5 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800/60 opacity-35 select-none flex items-center justify-between";
+          emptyDiv.innerHTML = `<span class="text-[10px] font-bold uppercase text-slate-400">${shortNames[i]} ${dObj.getDate()}</span><span class="text-[10px] text-slate-400">—</span>`;
+          container.appendChild(emptyDiv);
+          continue;
+        }
+
+        const hasSpecial = wk.specialDays && wk.specialDays[i];
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => selectDate(dKey);
+        btn.className = `flex flex-col sm:flex-row items-center justify-between p-2.5 sm:px-3.5 sm:py-2.5 rounded-2xl border transition-all text-left ${
+          isSel ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-500/20' : isToday ? 'bg-indigo-50 dark:bg-slate-800/90 text-indigo-600 dark:text-indigo-300 border-indigo-300 dark:border-indigo-700' : 'bg-slate-50 dark:bg-slate-800/40 text-slate-700 dark:text-slate-300 border-slate-200/70 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'
+        }`;
+
+        btn.innerHTML = `
+          <div>
+            <div class="text-[10px] font-bold uppercase tracking-wider ${isSel ? 'text-indigo-100' : 'text-slate-400'}">
+              <span class="hidden xl:inline">${dayNames[i]}</span><span class="xl:hidden">${shortNames[i]}</span>${hasSpecial ? ' ✨' : ''}
+            </div>
+            <div class="font-display text-sm font-extrabold mt-0.5">${dObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+          </div>
+          <div class="mt-1 sm:mt-0">
+            <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-lg ${isSel ? 'bg-white/20 text-white' : st.percent === 100 && st.total > 0 ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400' : 'bg-slate-200/70 dark:bg-slate-700/70 text-slate-600 dark:text-slate-300'}">${st.done}/${st.total}</span>
+          </div>
+        `;
+        container.appendChild(btn);
+      }
+    }
+
+    function renderDailyCommandCenter() {
+      const info = getTasksForDate(appState.selectedDateKey);
+      const st = getDayStats(appState.selectedDateKey);
+      const dObj = parseDateKey(appState.selectedDateKey);
+      const dayTitle = dObj.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+
+      document.getElementById('heroCollegeSchedule').textContent = info.specialNote ? info.specialNote : info.secF.scheduleBadge;
+      document.getElementById('dailySectionTitle').textContent = `${dayTitle} Checklist`;
+      document.getElementById('dailySectionSubtitle').textContent = info.secF.classes;
+      document.getElementById('heroSubtext').textContent = `${st.done} of ${st.total} Tasks Done`;
+      document.getElementById('weekThemeLabel').textContent = info.weekConfig.theme;
+      document.getElementById('heroPercentText').textContent = `${st.percent}%`;
+
+      const circumference = 201.06;
+      const offset = circumference - (st.percent / 100) * circumference;
+      const ringEl = document.getElementById('heroRingCircle');
+      ringEl.style.strokeDashoffset = offset;
+      ringEl.style.stroke = st.percent === 100 ? '#34d399' : '#a5b4fc';
+
+      const container = document.getElementById('dailyTasksContainer');
+      container.innerHTML = '';
+
+      const badgeColors = {
+        indigo: 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/30',
+        emerald: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
+        amber: 'bg-amber-500/15 text-amber-600 dark:text-amber-400 border-amber-500/30',
+        sky: 'bg-sky-500/15 text-sky-600 dark:text-sky-400 border-sky-500/30'
+      };
+
+      info.tasks.forEach(task => {
+        const done = isTaskDone(task.id);
+        const badgeStyle = badgeColors[task.color] || badgeColors.indigo;
+        const card = document.createElement('div');
+        card.className = `rounded-3xl p-4 sm:p-5 border transition-all flex items-center justify-between gap-4 ${
+          done ? 'bg-slate-50/90 dark:bg-slate-900/50 border-emerald-500/35' : 'bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 hover:border-indigo-500/40 shadow-2xs'
+        }`;
+        card.innerHTML = `
+          <div class="flex items-start gap-4 min-w-0 flex-1">
+            <div onclick="toggleTask('${task.id}')" class="w-12 h-12 rounded-2xl border ${badgeStyle} flex items-center justify-center text-2xl flex-shrink-0 cursor-pointer active:scale-95 transition">${task.icon}</div>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${badgeStyle}">${task.tag}</span>
+                ${task.url ? `<a href="${task.url}" target="_blank" rel="noopener" class="text-[11px] font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white hover:bg-indigo-500 transition">Solve on LeetCode ↗</a>` : ''}
+                ${task.isCustom ? `<button onclick="deleteCustomTask('${task.id}')" class="text-xs text-rose-500 font-bold hover:underline">Delete</button>` : ''}
+              </div>
+              <h4 onclick="toggleTask('${task.id}')" class="font-display text-sm sm:text-base font-bold mt-1.5 leading-snug cursor-pointer ${done ? 'line-through text-slate-400 dark:text-slate-500' : 'text-slate-900 dark:text-white'}">${task.title}</h4>
+            </div>
+          </div>
+          <button type="button" onclick="toggleTask('${task.id}')" class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all active:scale-90 cursor-pointer ${
+            done ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/25' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
+          }">
+            ${done ? `<svg class="w-6 h-6 stroke-[2.8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>` : `<svg class="w-6 h-6 stroke-2 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" stroke-dasharray="3 3"/></svg>`}
+          </button>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('timetableDayTitle').textContent = `${info.secF.dayShort} Section F Timetable`;
+      const slotsContainer = document.getElementById('timetableSlotsContainer');
+      slotsContainer.innerHTML = '';
+      (info.secF.slots || []).forEach(([timeStr, subjStr]) => {
+        const isFree = subjStr.includes('NO SCHEDULE') || subjStr.includes('Free');
+        const row = document.createElement('div');
+        row.className = `p-2.5 rounded-xl border flex items-center justify-between gap-3 ${isFree ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-300 font-bold' : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200/60 dark:border-slate-800'}`;
+        row.innerHTML = `<span class="text-[11px] font-extrabold whitespace-nowrap opacity-80">${timeStr}</span><span class="text-xs font-semibold text-right">${subjStr}</span>`;
+        slotsContainer.appendChild(row);
+      });
+
+      const wkNum = info.weekConfig.weekNum;
+      document.getElementById('weekDsaSideTitle').textContent = wkNum === 0 ? "Week 1 Preview Problems (#1–#7)" : `Week ${wkNum} DSA Problems`;
+      const targetWeek = wkNum === 0 ? 1 : wkNum;
+      const weekProbs = DSA_50.filter(p => p.week === targetWeek);
+      const quickList = document.getElementById('weekDsaQuickList');
+      quickList.innerHTML = '';
+
+      weekProbs.forEach(p => {
+        const tId = `dsa_${p.num}`;
+        const done = isTaskDone(tId);
+        const item = document.createElement('div');
+        item.className = `p-2.5 rounded-2xl border flex items-center justify-between gap-2 transition ${done ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-50 dark:bg-slate-800/50 border-slate-200/70 dark:border-slate-800'}`;
+        item.innerHTML = `
+          <div onclick="toggleTask('${tId}')" class="flex items-center gap-2.5 min-w-0 flex-1 cursor-pointer">
+            <span class="w-6 h-6 rounded-lg flex items-center justify-center text-[11px] font-extrabold flex-shrink-0 ${done ? 'bg-emerald-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'}">${done ? '✓' : `#${p.num}`}</span>
+            <span class="text-xs font-bold truncate ${done ? 'line-through text-slate-400' : ''}">${p.title}</span>
+          </div>
+          <a href="${p.url}" target="_blank" rel="noopener" class="text-[10px] font-extrabold px-2 py-1 rounded-lg bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white transition">LC ↗</a>
+        `;
+        quickList.appendChild(item);
+      });
+    }
+
+    function renderIsa1Section() {
+      const isaSt = getIsaGlobalStats();
+      document.getElementById('isaProgressLabel').textContent = `${isaSt.done} of ${isaSt.total} Active Proof Checks Done`;
+      document.getElementById('isaProgressPct').textContent = `${isaSt.percent}%`;
+      document.getElementById('isaProgressBar').style.width = `${isaSt.percent}%`;
+
+      const filterBar = document.getElementById('isaSubjectFilterBar');
+      filterBar.innerHTML = '';
+      const allBtn = document.createElement('button');
+      allBtn.type = 'button';
+      allBtn.onclick = () => { appState.isaSubjectFilter = 'ALL'; renderIsa1Section(); };
+      allBtn.className = `px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition ${appState.isaSubjectFilter === 'ALL' ? 'bg-amber-500 text-slate-950' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800'}`;
+      allBtn.textContent = 'All 6 Section F Courses';
+      filterBar.appendChild(allBtn);
+
+      ISA1_COURSES.forEach(c => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.onclick = () => { appState.isaSubjectFilter = c.code; renderIsa1Section(); };
+        btn.className = `px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition ${appState.isaSubjectFilter === c.code ? 'bg-amber-500 text-slate-950' : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800'}`;
+        btn.textContent = `${c.icon} ${c.fullCode}`;
+        filterBar.appendChild(btn);
+      });
+
+      const container = document.getElementById('isaCoursesContainer');
+      container.innerHTML = '';
+
+      ISA1_COURSES.forEach(course => {
+        if (appState.isaSubjectFilter !== 'ALL' && appState.isaSubjectFilter !== course.code) return;
+        const topics = getCourseTopics(course);
+        let cDone = 0;
+        topics.forEach(t => { if (isTaskDone(t.id)) cDone++; });
+        const cPct = topics.length > 0 ? Math.round((cDone / topics.length) * 100) : 0;
+
+        let topicsHtml = '';
+        topics.forEach(t => {
+          const done = isTaskDone(t.id);
+          topicsHtml += `
+            <div onclick="toggleTask('${t.id}')" class="p-3 rounded-2xl border flex items-start justify-between gap-3 cursor-pointer transition ${done ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200/80 dark:border-slate-800 hover:border-amber-500/40'}">
+              <div class="flex items-start gap-3 min-w-0 flex-1">
+                <button type="button" class="w-6 h-6 mt-0.5 rounded-lg flex items-center justify-center text-xs font-extrabold flex-shrink-0 ${done ? 'bg-emerald-500 text-white' : 'bg-white dark:bg-slate-900 text-slate-400 border border-slate-300 dark:border-slate-700'}">${done ? '✓' : ''}</button>
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-amber-500/15 text-amber-600 dark:text-amber-400">${t.unit}</span>
+                    ${t.isCustom ? `<button type="button" onclick="deleteIsaCustomTopic('${course.code}', '${t.id}', event)" class="text-[10px] text-rose-500 font-bold ml-auto">Remove</button>` : ''}
+                  </div>
+                  <p class="text-xs sm:text-sm font-semibold mt-1 leading-snug ${done ? 'line-through text-slate-400 dark:text-slate-500' : 'text-slate-800 dark:text-slate-100'}">${t.text}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+
+        const card = document.createElement('div');
+        card.className = 'rounded-3xl p-5 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 space-y-3.5 shadow-2xs';
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <span class="text-xs font-extrabold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">${course.fullCode}</span>
+              <h4 class="font-display text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2 mt-0.5"><span>${course.icon}</span><span>${course.name}</span></h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400">${course.faculty}</p>
+            </div>
+            <span class="px-3 py-1 rounded-xl text-xs font-extrabold ${cPct === 100 ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'}">${cDone}/${topics.length} (${cPct}%)</span>
+          </div>
+          <div class="w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full bg-emerald-500 rounded-full transition-all duration-300" style="width: ${cPct}%"></div>
+          </div>
+          <div class="space-y-2.5 pt-1">${topicsHtml}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderDsa50Sheet() {
+      const doneCount = getGlobalDsaCount();
+      document.getElementById('dsaSheetBadge').textContent = `${doneCount} / 50 Solved`;
+
+      ['all', 'todo', 'done'].forEach(f => {
+        const btn = document.getElementById(`dsaFilter-${f}`);
+        btn.className = f === appState.dsaFilter ? 'px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white' : 'px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300';
+      });
+
+      const listEl = document.getElementById('dsa50ListContainer');
+      listEl.innerHTML = '';
+
+      DSA_50.forEach(prob => {
+        const tId = `dsa_${prob.num}`;
+        const done = isTaskDone(tId);
+        if (appState.dsaFilter === 'todo' && done) return;
+        if (appState.dsaFilter === 'done' && !done) return;
+
+        const row = document.createElement('div');
+        row.className = `rounded-2xl p-4 border flex items-center justify-between gap-3 transition ${done ? 'bg-emerald-500/5 border-emerald-500/30' : 'bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800 hover:border-indigo-500/40'}`;
+        row.innerHTML = `
+          <div class="flex items-center gap-3 min-w-0 flex-1">
+            <button onclick="toggleTask('${tId}')" class="w-9 h-9 rounded-xl flex items-center justify-center font-display text-xs font-extrabold flex-shrink-0 transition cursor-pointer ${done ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}">${done ? '✓' : `#${prob.num}`}</button>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">Week ${prob.week}</span>
+                <span class="text-[10px] font-semibold text-slate-500">${prob.topic}</span>
+                <span class="text-[10px] font-bold ${prob.diff === 'Easy' ? 'text-emerald-500' : 'text-amber-500'}">• ${prob.diff}</span>
+              </div>
+              <div onclick="toggleTask('${tId}')" class="font-display text-sm font-bold truncate mt-1 cursor-pointer ${done ? 'line-through text-slate-400' : 'text-slate-900 dark:text-white'}">${prob.title}</div>
+            </div>
+          </div>
+          <a href="${prob.url}" target="_blank" rel="noopener" class="px-3 py-2 rounded-xl text-xs font-extrabold bg-indigo-600/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-600 hover:text-white transition flex-shrink-0">Solve ↗</a>
+        `;
+        listEl.appendChild(row);
+      });
+    }
+
+    function renderAnalytics() {
+      const dsaDone = getGlobalDsaCount();
+      const wkSt = getWeekStats(appState.selectedWeekIdx);
+      const isaSt = getIsaGlobalStats();
+
+      document.getElementById('statDsaDone').textContent = `${dsaDone} / 50`;
+      document.getElementById('statIsaRate').textContent = `${isaSt.percent}%`;
+      document.getElementById('statIsaCount').textContent = `${isaSt.done} / ${isaSt.total} active proof checks`;
+      document.getElementById('statWeekRate').textContent = `${wkSt.percent}%`;
+      document.getElementById('statWeekCount').textContent = `${wkSt.done} / ${wkSt.total} tasks completed`;
+
+      const chartEl = document.getElementById('weeklyBarChart');
+      chartEl.innerHTML = '';
+      const wk = WEEKS_CONFIG[appState.selectedWeekIdx];
+      const mon = parseDateKey(wk.startMonday);
+      const dayShort = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+      for (let i = 0; i < 7; i++) {
+        const dKey = toDateKey(addDays(mon, i));
+        const st = getDayStats(dKey);
+        const isSel = dKey === appState.selectedDateKey;
+        const hPct = Math.max(st.percent, 8);
+        const col = document.createElement('div');
+        col.onclick = () => { selectDate(dKey); setViewMode('daily'); };
+        col.className = 'flex flex-col items-center h-full justify-end cursor-pointer';
+        col.innerHTML = `
+          <span class="text-[11px] font-bold mb-1.5 ${isSel ? 'text-indigo-500' : 'text-slate-400'}">${st.percent}%</span>
+          <div class="w-full max-w-[38px] h-36 bg-slate-100 dark:bg-slate-800 rounded-2xl p-1 flex items-end overflow-hidden ${isSel ? 'ring-2 ring-indigo-500' : ''}">
+            <div class="bar-fill w-full rounded-xl ${st.percent === 100 ? 'bg-emerald-500' : 'bg-indigo-500'}" style="height:${hPct}%"></div>
+          </div>
+          <span class="mt-2 text-xs font-bold ${isSel ? 'text-indigo-500' : 'text-slate-500'}">${dayShort[i]}</span>
+        `;
+        chartEl.appendChild(col);
+      }
+
+      const ovEl = document.getElementById('eightWeekOverviewList');
+      ovEl.innerHTML = '';
+      WEEKS_CONFIG.forEach((w, idx) => {
+        const st = getWeekStats(idx);
+        const div = document.createElement('div');
+        div.onclick = () => { selectWeek(idx); setViewMode('daily'); };
+        div.className = 'p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-800 flex items-center justify-between gap-3 cursor-pointer hover:border-indigo-500/50 transition';
+        div.innerHTML = `
+          <div class="min-w-0 flex-1">
+            <div class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400">${w.label}</div>
+            <div class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate mt-0.5">${w.theme}</div>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <span class="text-sm font-extrabold ${st.percent === 100 ? 'text-emerald-500' : 'text-indigo-500'}">${st.percent}%</span>
+            <div class="text-[10px] text-slate-400">${st.done}/${st.total}</div>
+          </div>
+        `;
+        ovEl.appendChild(div);
+      });
+    }
+
+    function selectWeek(weekIdx) {
+      appState.selectedWeekIdx = weekIdx;
+      const wk = WEEKS_CONFIG[weekIdx];
+      appState.selectedDateKey = (weekIdx === 0) ? "2026-10-16" : wk.startMonday;
+      saveState();
+      renderAll();
+    }
+
+    function selectDate(dateKey) {
+      appState.selectedDateKey = dateKey;
+      WEEKS_CONFIG.forEach((wk, idx) => {
+        const mon = parseDateKey(wk.startMonday);
+        for (let i = 0; i < 7; i++) {
+          if (toDateKey(addDays(mon, i)) === dateKey) {
+            appState.selectedWeekIdx = idx;
+          }
+        }
+      });
+      saveState();
+      renderAll();
+    }
+
+    function selectToday() {
+      selectDate(DEFAULT_TODAY);
+      showToast("Jumped to Friday, Oct 16, 2026");
+    }
+
+    function toggleTask(taskId) {
+      const wasDone = Boolean(appState.completed[taskId]);
+      if (wasDone) {
+        delete appState.completed[taskId];
+        playSound('uncheck');
+      } else {
+        appState.completed[taskId] = true;
+        playSound('check');
+      }
+      saveState();
+      renderAll();
+
+      if (!wasDone) {
+        if (taskId.startsWith('isa_')) {
+          const isaSt = getIsaGlobalStats();
+          if (isaSt.total > 0 && isaSt.percent === 100) {
+            playSound('celebrate');
+            launchConfetti();
+            showToast("🏆 100% of ISA-1 Syllabus Mastered!");
+          }
+        } else {
+          const st = getDayStats(appState.selectedDateKey);
+          if (st.total > 0 && st.percent === 100) {
+            playSound('celebrate');
+            launchConfetti();
+            showToast("🎉 100% of today's plan completed!");
+          }
+        }
+      }
+    }
+
+    function setViewMode(mode) {
+      appState.viewMode = mode;
+      document.getElementById('dailySection').classList.toggle('hidden', mode !== 'daily');
+      document.getElementById('isa1Section').classList.toggle('hidden', mode !== 'isa1');
+      document.getElementById('dsa50Section').classList.toggle('hidden', mode !== 'dsa50');
+      document.getElementById('analyticsSection').classList.toggle('hidden', mode !== 'analytics');
+
+      ['daily', 'isa1', 'dsa50', 'analytics'].forEach(m => {
+        const btn = document.getElementById(`navBtn-${m}`);
+        if (!btn) return;
+        if (m === mode) {
+          btn.className = 'w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all bg-indigo-600 text-white shadow-md shadow-indigo-500/25';
+        } else {
+          btn.className = 'w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs font-bold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800';
+        }
+      });
+    }
+
+    function setDsaFilter(filter) {
+      appState.dsaFilter = filter;
+      renderDsa50Sheet();
+    }
+
+    function openAddModal() {
+      document.getElementById('customTaskTitle').value = '';
+      document.getElementById('customTaskTag').value = '';
+      document.getElementById('customTaskModal').classList.remove('hidden');
+      document.getElementById('customTaskModal').classList.add('flex');
+    }
+
+    function closeAddModal() {
+      document.getElementById('customTaskModal').classList.remove('flex');
+      document.getElementById('customTaskModal').classList.add('hidden');
+    }
+
+    function handleAddCustomTask(e) {
+      e.preventDefault();
+      const title = document.getElementById('customTaskTitle').value.trim();
+      const tag = document.getElementById('customTaskTag').value.trim() || '📌 Custom Task';
+      if (!title) return;
+      if (!appState.customTasks[appState.selectedDateKey]) {
+        appState.customTasks[appState.selectedDateKey] = [];
+      }
+      appState.customTasks[appState.selectedDateKey].push({
+        id: 'cust_' + Date.now(),
+        title, tag, icon: '📌', color: 'indigo', isCustom: true
+      });
+      saveState();
+      renderAll();
+      closeAddModal();
+      showToast('Added custom task to day!');
+    }
+
+    function deleteCustomTask(taskId) {
+      const list = appState.customTasks[appState.selectedDateKey] || [];
+      appState.customTasks[appState.selectedDateKey] = list.filter(t => t.id !== taskId);
+      delete appState.completed[taskId];
+      saveState();
+      renderAll();
+      showToast('Custom task removed');
+    }
+
+    function openIsaModal() {
+      document.getElementById('isaTopicTitle').value = '';
+      document.getElementById('isaCustomModal').classList.remove('hidden');
+      document.getElementById('isaCustomModal').classList.add('flex');
+    }
+
+    function closeIsaModal() {
+      document.getElementById('isaCustomModal').classList.remove('flex');
+      document.getElementById('isaCustomModal').classList.add('hidden');
+    }
+
+    function handleAddIsaTopic(e) {
+      e.preventDefault();
+      const code = document.getElementById('isaCourseSelect').value;
+      const text = document.getElementById('isaTopicTitle').value.trim();
+      if (!text) return;
+      if (!appState.customIsaTopics[code]) {
+        appState.customIsaTopics[code] = [];
+      }
+      appState.customIsaTopics[code].push({
+        id: 'isa_cust_' + Date.now(),
+        unit: 'Custom', text, isCustom: true
+      });
+      saveState();
+      renderAll();
+      closeIsaModal();
+      showToast(`Added topic to ${code}!`);
+    }
+
+    function deleteIsaCustomTopic(courseCode, topicId, e) {
+      if (e) e.stopPropagation();
+      const list = appState.customIsaTopics[courseCode] || [];
+      appState.customIsaTopics[courseCode] = list.filter(t => t.id !== topicId);
+      delete appState.completed[topicId];
+      saveState();
+      renderAll();
+      showToast('Custom ISA topic removed');
+    }
+
+    function toggleTheme() {
+      appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
+      saveState();
+      renderAll();
+    }
+
+    function toggleSound() {
+      appState.soundEnabled = !appState.soundEnabled;
+      saveState();
+      renderAll();
+    }
+
+    function openResetModal() {
+      document.getElementById('resetModal').classList.remove('hidden');
+      document.getElementById('resetModal').classList.add('flex');
+    }
+
+    function closeResetModal() {
+      document.getElementById('resetModal').classList.remove('flex');
+      document.getElementById('resetModal').classList.add('hidden');
+    }
+
+    function resetSelectedDay() {
+      const info = getTasksForDate(appState.selectedDateKey);
+      info.tasks.forEach(t => delete appState.completed[t.id]);
+      saveState();
+      renderAll();
+      closeResetModal();
+      showToast('Cleared selected day');
+    }
+
+    function resetAllProgress() {
+      appState.completed = {};
+      appState.customTasks = {};
+      appState.customIsaTopics = {};
+      saveState();
+      renderAll();
+      closeResetModal();
+      showToast('All progress reset');
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const b = document.getElementById('toastBanner');
+      document.getElementById('toastMessage').textContent = msg;
+      b.classList.remove('opacity-0', 'translate-y-2');
+      b.classList.add('opacity-100', 'translate-y-0');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        b.classList.remove('opacity-100', 'translate-y-0');
+        b.classList.add('opacity-0', 'translate-y-2');
+      }, 2200);
+    }
+
+    function launchConfetti() {
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const colors = ['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#06b6d4'];
+      const particles = Array.from({ length: 60 }, () => ({
+        x: canvas.width / 2 + (Math.random() - 0.5) * 250,
+        y: canvas.height * 0.35,
+        vx: (Math.random() - 0.5) * 12,
+        vy: -Math.random() * 10 - 4,
+        size: Math.random() * 7 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: 1
+      }));
+      let frame = 0;
+      function anim() {
+        frame++;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.x += p.vx; p.y += p.vy; p.vy += 0.38;
+          if (frame > 35) p.alpha -= 0.03;
+          if (p.alpha > 0) {
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.alpha);
+            ctx.fillRect(p.x, p.y, p.size, p.size * 0.7);
+          }
+        });
+        if (frame < 75) requestAnimationFrame(anim);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+      requestAnimationFrame(anim);
+    }
+
+    function exportBackupData() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState));
+      const dlAnchor = document.createElement('a');
+      dlAnchor.setAttribute("href", dataStr);
+      dlAnchor.setAttribute("download", `amulya_pes_backup_${appState.selectedDateKey}.json`);
+      document.body.appendChild(dlAnchor);
+      dlAnchor.click();
+      dlAnchor.remove();
+      showToast('Backup file downloaded!');
+    }
+
+    function importBackupData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported && imported.completed) {
+            appState.completed = imported.completed;
+            appState.customTasks = imported.customTasks || {};
+            appState.customIsaTopics = imported.customIsaTopics || {};
+            saveState();
+            renderAll();
+            closeResetModal();
+            showToast('Backup restored successfully! 🎉');
+          }
+        } catch (err) {
+          showToast('Invalid backup file');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadState();
+      renderAll();
+      setInterval(updateIsaCountdownBanner, 60000);
+    });
+  </script>
+</body>
+</html>
